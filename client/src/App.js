@@ -9,7 +9,7 @@ import { register } from './store/userSlice';
 function App() {
   const dispatch = useDispatch();
   
-  let user=null;
+  let user='';
   useEffect(() => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       user = JSON.parse(localStorage.getItem("User"));
