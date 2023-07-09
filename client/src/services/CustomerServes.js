@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseUrl = "http://localhost:8080/api/customers";
+export const baseUrl = "https://koskillserver2.onrender.com/api/customers";
 
 export const addCustomer = async (body) => {
   try {
@@ -20,7 +20,7 @@ export const getAllCustomer = async () => {
       if (data.status !== 200) {
         return { error: true, message: data.data.message,status:data.status };
       } else {
-        return { error: false, message: "Success", data: data.data ,status:data.status };
+        return { error: false, message: "Success", data: data?.data ,status:data.status };
       }
     } catch (error) {
       return { error: true, message: error.response.data.message, status:500};
