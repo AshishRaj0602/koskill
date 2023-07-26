@@ -14,14 +14,14 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const dispatch=useDispatch();
   const navigate=useNavigate();
+  const fetchData = async () => {
+    let data = await getAllCustomer();
+    let fiteredData = data?.data?.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    setCustomers(fiteredData);
+}
   useEffect(() => {
-    const fetchData = async () => {
-      let data = await getAllCustomer();
-      let fiteredData = data?.data?.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
-      setCustomers(fiteredData);
-  }
   fetchData();
-  }, [customers,searchTerm]);
+  }, [searchTerm]);
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -36,17 +36,20 @@ const Home = () => {
     
     const data= await addCustomer(customer);
         setCustomers([...customers, data]);
+        await fetchData();
         setName('');
         setEmail('');
         setPhone('');
   };
   const handleDelete = async(customerId) => {
     await deleteCustomer(customerId);
+    await fetchData();
     
   };
-  const handleEdit = (customerId) => {
+  const handleEdit = async(customerId) => {
     const customerToEdit = customers.find((customer) => customer._id === customerId);
     setEditedCustomer(customerToEdit);
+    await fetchData();
   };
   const handleCancel = () => {
     setEditedCustomer({});
